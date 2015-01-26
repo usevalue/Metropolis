@@ -1,0 +1,4 @@
+name: Metropolis
+main: net.usevalue.metropolis.Metropolis
+version: 0.1.0
+depend: [WorldGuard,Vault]
