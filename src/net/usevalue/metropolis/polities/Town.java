@@ -2,27 +2,36 @@ package net.usevalue.metropolis.polities;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.World;
+
 import java.util.HashSet;
 import static net.usevalue.metropolis.Metropolis.plugin;
 
 public class Town implements Polis {
 
-    public String name;
-    public final ProtectedRegion region;
+    private String name;
+    private ProtectedRegion region;
+    private HashSet<OfflinePlayer> leaders;
 
-    public Town(String name) {
-        this.name=name;
-        region = null;
+    public Town(String regionId, World world) {
+        this.name=regionId;
+        region = plugin.worldguard.getRegionManager(world).getRegion(regionId);
+        if(region==null || !(region instanceof ProtectedRegion)) {
+            throw new NullPointerException();
+        }
+        leaders = new HashSet<OfflinePlayer>();
     }
+
     public String getName() {
-        return null;
-    }
-
-    public HashSet<OfflinePlayer> getLeaders() {
-        return null;
+        return name;
     }
 
     public ProtectedRegion getRegion() {
-        return null;
+        return region;
     }
+
+    public HashSet<OfflinePlayer> getLeaders() {
+        return leaders;
+    }
+
 }

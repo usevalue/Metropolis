@@ -2,3 +2,10 @@ name: Metropolis
 main: Metropolis
 version: 0.1.0
 depend: [WorldGuard,Vault]
+
+commands:
+  town:
+    description: Basic command for towns.
+    usage: /town
+    permission: metropolis.town
+    permission-message: You lack the metropolis.town permission

@@ -10,5 +10,4 @@ public interface Polis {
     public String getName();
     public ProtectedRegion getRegion();
     public HashSet<OfflinePlayer> getLeaders();
-
 }

@@ -1,5 +1,6 @@
 package net.usevalue.metropolis;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,16 +15,27 @@ public class Metropolis extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        // The basics
         plugin = this;
         log = getServer().getLogger();
+        CommandExecutor cmds = new MetCommands(this);
+        getCommand("town").setExecutor(cmds);
+
+        // Load dependencies
         Plugin wg = getServer().getPluginManager().getPlugin("WorldGuard");
         if(wg instanceof WorldGuardPlugin) worldguard = (WorldGuardPlugin) wg;
-        else this.disable();
-        log.log(Level.WARNING,"Metropolis enabled.");
+        else {
+            log.log(Level.SEVERE, "Worldguard not found.  Metropolis disabling");
+            this.disable();
+        }
+
+
+        // All good
+        log.log(Level.INFO,"Metropolis enabled.");
     }
 
     public void disable() {
-        log.log(Level.SEVERE, "Metropolis disabling.");
         getServer().getPluginManager().disablePlugin(this);
     }
 }
