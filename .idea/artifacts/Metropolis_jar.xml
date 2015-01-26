@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Metropolis:jar">
-    <output-path>$PROJECT_DIR$/../../IncRec2/plugins</output-path>
-    <root id="archive" name="Metropolis.jar">
-      <element id="module-output" name="Metropolis" />
-    </root>
-  </artifact>
-</component>
