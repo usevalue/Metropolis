@@ -1,10 +1,9 @@
-package net.usevalue.metropolis.polities;
+package net.usevalue.metropolis.plots;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 
-public interface Land {
+public interface Plot {
 
     public ProtectedRegion getRegion();
-    public Town getPolis();
 
 }

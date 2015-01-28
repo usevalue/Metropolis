@@ -6,6 +6,11 @@ depend: [WorldGuard,Vault]
 commands:
   town:
     description: Basic command for towns.
-    usage: /town
+    usage: Please enter /town help for information on town commands.
     permission: metropolis.town
-    permission-message: You lack the metropolis.town permission
+    permission-message: You lack the metropolis.town permission.
+  plot:
+    description: Basic command for town plots.
+    usage: Please enter /plot help for information on plot commands.
+    permission: metropolis.plot
+    permission-message: You lack the metropolis.plot permission.

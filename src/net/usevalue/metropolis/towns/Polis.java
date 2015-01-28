@@ -1,4 +1,4 @@
-package net.usevalue.metropolis.polities;
+package net.usevalue.metropolis.towns;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.OfflinePlayer;
