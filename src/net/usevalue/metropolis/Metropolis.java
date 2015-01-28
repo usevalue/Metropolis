@@ -18,7 +18,7 @@ public class Metropolis extends JavaPlugin {
     public Logger log;
     private WorldGuardPlugin worldguard;
 
-    private HashMap<String,Geographer> geographers;
+    public HashMap<String,Geographer> geographers;
 
     @Override
     public void onEnable() {
