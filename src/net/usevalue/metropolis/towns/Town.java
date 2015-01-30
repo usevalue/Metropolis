@@ -1,9 +1,9 @@
 package net.usevalue.metropolis.towns;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import net.usevalue.metropolis.plots.TownPlot;
+import net.usevalue.metropolis.database.Geographer;
+import net.usevalue.metropolis.plots.Plot;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 
 import java.util.*;
 
@@ -11,79 +11,75 @@ import static net.usevalue.metropolis.Metropolis.plugin;
 
 public class Town implements Polis {
 
-    private String name;
-    private ProtectedRegion region;
-    private HashSet<OfflinePlayer> leaders;
-    private HashMap<String,TownPlot> plots;
+    public final ProtectedRegion region;
+    public final Geographer geo;
 
-    public Town(ProtectedRegion region, World world) {
+    public Town(ProtectedRegion region, Geographer geo) {
         this.region = region;
-        leaders = new HashSet<OfflinePlayer>();
+        this.geo=geo;
     }
 
-
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean setName(String name) {
-        if(name.contains(" ")) return false;
-        if(plugin.getTown(name)!=null) return false;
-        this.name=name;
-        return true;
-    }
-
-
-
+    @Override
     public ProtectedRegion getRegion() {
         return region;
     }
 
+    @Override
+    public String getName() {
+        return geo.getConfig().getString(region.getId()+".Name");
+    }
 
+    @Override
+    public void setName(String name) {
+        geo.getConfig().set(region.getId() + ".Name", name);
+    }
 
-    public HashSet<OfflinePlayer> getLeaders() {
+    @Override
+    public List<String> getLeaders() {
+        LinkedList<String> leaders = new LinkedList<String>();
+        for(String name:geo.getConfig().getStringList(region.getId()+".Leaders")) {
+            leaders.add(name);
+        }
         return leaders;
     }
 
+    @Override
     public boolean addLeader(String name) {
-        OfflinePlayer player = getPlayer(name);
-        if(player!=null&&player instanceof OfflinePlayer) {
-            leaders.add(player);
+        OfflinePlayer leader = getPlayer(name);
+        Collection<String> leaders = getLeaders();
+        if(leader==null||leaders.contains(name)) return false;
+        else {
+            leaders.add(name);
+            geo.getConfig().set(region.getId()+".Leaders",leaders);
             return true;
         }
-        return false;
     }
 
+    @Override
     public boolean removeLeader(String name) {
-        OfflinePlayer player = getPlayer(name);
-        if (leaders.contains(player)) {
-            leaders.remove(player);
+        List<String> leaders = getLeaders();
+        if(leaders.contains(name)) {
+            leaders.remove(name);
+            geo.getConfig().set(region.getId()+".Leaders",leaders);
             return true;
         }
         return false;
     }
 
-
-
-    public boolean addPlot(ProtectedRegion region) {
-        plots.put(region.getId(), new TownPlot(region, this));
-        return true;
+    @Override
+    public Collection<Plot> getPlots() {
+        return null;
     }
 
-    public TownPlot getPlot(String id) {
-        return plots.get(id);
+    @Override
+    public boolean addPlot(ProtectedRegion plotRegion) {
+        return false;
     }
 
-    public Collection<TownPlot> getPlots() {
-        return plots.values();
+    @Override
+    public boolean removePlot(ProtectedRegion plotRegion) {
+        return false;
     }
-
-    public Set<String> getPlotIds() {
-        return plots.keySet();
-    }
-
-
 
 
     @SuppressWarnings("deprecation")  //Yes, we're grabbing players by name.

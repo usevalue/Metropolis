@@ -74,7 +74,7 @@ public class plotCommand implements CommandExecutor {
             sender.sendMessage(regionId+" is not a valid region in "+world.getName()+".");
             return;
         }
-        List<Town> overlappingTowns = plugin.geographers.get(world.getName()).getOverlappingTowns(region);
+        List<String> overlappingTowns = plugin.geographers.get(world.getName()).getOverlappingTowns(region);
         if(overlappingTowns.size()==0) {
             sender.sendMessage("The region in question is not inside a town.");
             return;

@@ -14,3 +14,36 @@ commands:
     usage: Please enter /plot help for information on plot commands.
     permission: metropolis.plot
     permission-message: You lack the metropolis.plot permission.
+
+
+permissions:
+    metropolis.*:
+      description: Gives access to ALL metropolis commands and admin overrides.
+      default: op
+      children:
+          metropolis.admin: true
+          metropolis.town.*: true
+    metropolis.admin.*:
+      description: Gives access to all overrides.
+      default: false
+      children:
+          metropolis.admin.town: true
+          metropolis.admin.plot: true
+    metropolis.admin.town:
+      description: Gives access to town overrides.
+      default: false
+    metropolis.admin.plot:
+      description: Gives access to plot overrides.
+      default: false
+    metropolis.town.*
+      description: Gives access to all Metropolis town commands.
+      default: false
+    metropolis.town.create:
+      description: Allows a user to create a town.
+      default: false
+    metropolis.town.remove:
+      description: Allows a user to remove towns.
+      default: false
+    metropolis.town.set:
+      description: Allows a user to set town values if they are a mayor or have admin overrides.
+      default: true

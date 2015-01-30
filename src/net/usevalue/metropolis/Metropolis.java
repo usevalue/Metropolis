@@ -1,7 +1,7 @@
 package net.usevalue.metropolis;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.usevalue.metropolis.commands.plotCommand;
-import net.usevalue.metropolis.commands.townCommand;
+import net.usevalue.metropolis.commands.TownCommand;
 import net.usevalue.metropolis.database.Geographer;
 import net.usevalue.metropolis.towns.Town;
 import org.bukkit.World;
@@ -26,7 +26,7 @@ public class Metropolis extends JavaPlugin {
         // The basics
         plugin = this;
         log = getServer().getLogger();
-        getCommand("town").setExecutor(new townCommand(this));
+        getCommand("town").setExecutor(new TownCommand(this));
         getCommand("plot").setExecutor(new plotCommand(this));
 
         // Load dependencies
@@ -62,11 +62,9 @@ public class Metropolis extends JavaPlugin {
         return worldguard;
     }
 
-    public Town getTown(String name) {
+    public Town getTown(String id) {
         for(Geographer geo:geographers.values()) {
-            for(Town town:geo.getTowns()) {
-                if(town.getName().equals(name)) return town;
-            }
+            if(geo.getTown(id)!=null) return geo.getTown(id);
         }
         return null;
     }
